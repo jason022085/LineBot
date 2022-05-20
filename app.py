@@ -40,7 +40,6 @@ def fetch(url):
     return response
 
 def getphoto():
-    
     url = 'https://www.ptt.cc/bbs/Beauty/index.html'
     addr = []
     for round in range(2):
@@ -52,7 +51,7 @@ def getphoto():
         url = next_url
         print("round ",round)
         for article in articles:
-            if '[正妹]' in article.text:#只抓正妹的
+            if '[正妹]' in article.text:#只抓特定標籤
                 addr.append('https://www.ptt.cc'+article['href'])
                 #print(article['href'],article.text)
     print('已抓取文章網址')
@@ -123,11 +122,11 @@ def handle_text(event):
         line_bot_api.reply_message(event.reply_token,image_message)    
         
     elif user_input == "你是誰":
-        reply = ["聽過siri嗎？\n我是她弟","皇\n甫\n承\n佑\n哥\n哥\n！","才貌兼備、智勇雙全的那個男人。"]
+        reply = ["我是:\n","皇甫承佑！","那個永不放棄的男人。"]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply)))#隨機從reply回一句話
 
     elif user_input == "璇璇" :
-        reply = ["貼心的朋友","音樂才女","資管達人","寶可夢大師","10年後的妻子"]
+        reply = ["貼心的朋友","音樂才女","資管達人","寶可夢大師"]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply,p=[0.249, 0.249, 0.249, 0.249, 0.004])))#隨機從reply回一句話
 
     elif user_input in ["照片","相片","圖片"]:
@@ -154,7 +153,7 @@ def handle_text(event):
         line_bot_api.reply_message(event.reply_token,sticker_message)
 
     elif user_input == "晚安" :
-        reply = ["一起睡覺吧~","晚ㄤㄤ","趕快睡覺哦!","我只跟你說：晚安"]
+        reply = ["晚ㄤㄤ"]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply)))#隨機從reply回一句話
 
     elif user_input == '按鈕':
@@ -173,15 +172,11 @@ def handle_text(event):
         line_bot_api.reply_message(event.reply_token,TextSendMessage("(#‵)3′)▂▂▂▃▄▅～～～嗡嗡嗡嗡嗡"))
 
     elif "好餓" in user_input:
-        reply = ["走！去吃麥當勞","今天很冷，吃個火鍋暖暖身體吧！","我泡好兩杯熱可可了，你要的話，兩杯都給你。","三層山今天的口味很特別哦！","我吃什麼你就吃什麼(霸氣)"]
+        reply = ["走！去吃麥當勞","今天很冷，吃個火鍋暖暖身體吧！","我泡好兩杯熱可可了，你要的話，兩杯都給你。","三層山今天的口味很特別哦！"]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply)))#隨機從reply回一句話
 
-    elif user_input == "親親":
-        reply = ["哼，只能臉頰","恩麻","現在不方便XD"]
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply)))#隨機從reply回一句話
-
-    elif user_input == "你愛我嗎" :
-        reply = ["愛你唷~","一個口和一個矣加起來怎麼唸？","我不敢說我愛你，因為我在想你<3","傻孩子，我從第一次見到你就沒變過了","你一直問我快煩死了！"]
+    elif user_input == "說笑話" :
+        reply = ["笑話","你就是個笑話","中山國中在中國山中","垃圾場有4個垃圾，而你去就4個垃圾","我沒梗了"]
         line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply,p=[0.249, 0.249, 0.249, 0.249, 0.004])))#隨機從reply回一句話
 
     elif user_input in ["合照"]:
@@ -189,30 +184,21 @@ def handle_text(event):
         image_message = ImageSendMessage(original_content_url= img_url, #真實圖片
                                          preview_image_url= img_url) #預覽圖
         line_bot_api.reply_message(event.reply_token,image_message)
-    
-    elif user_input == "晚安" :
-        reply = ["一起睡覺吧~","晚ㄤㄤ","趕快睡覺哦!","1...2...3...(打呼了)"]
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(np.random.choice(reply)))#隨機從reply回一句話
-
-    elif user_input == '約會':
+  
+    elif user_input == '約會推薦':
         buttons_template = ButtonsTemplate(
             title='妳要去哪兒?', text='只能選一個哦!', actions=[
-                URIAction(label='最偉大的大學', uri='https://www.nctu.edu.tw'),
+                URIAction(label='交通大學', uri='https://www.nctu.edu.tw'),
                 URIAction(label='兒童新樂園', uri='https://www.tcap.taipei/Content_List.aspx?n=CD0DAF4E7055A7E8'),
-                PostbackAction(label='看夜景', data='ping', text='看夜景'),
-                MessageAction(label='做羞羞臉的事', text='去床上約會XD')
+                PostbackAction(label='夜景咖啡廳', data='ping', text='看夜景'),
+                MessageAction(label='宅在家', text='今天不想出門')
             ])
         template_message = TemplateSendMessage(
             alt_text='Buttons alt text', template=buttons_template)
         line_bot_api.reply_message(event.reply_token, template_message)
 
     elif user_input in ["哭哭","QQ",'qq',"嗚嗚",'QAQ']  :
-        line_bot_api.reply_message(event.reply_token,TextSendMessage("拍拍，別難過，我一直都在陪妳:D")) 
-
-    elif user_input in ['去床上約會XD']  :
-        line_bot_api.reply_message(event.reply_token,TextSendMessage("人機殊途，妳還是認真找個伴吧！")) 
-
-    
+        line_bot_api.reply_message(event.reply_token,TextSendMessage("拍拍，別難過，我一直都在:D")) 
 
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage("你是說"+user_input+"嗎？\n我不知道啦 哈哈"))
