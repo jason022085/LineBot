@@ -10,7 +10,7 @@ line-bot-sdk==1.8.0
 MarkupSafe==1.0
 requests==2.19.1
 urllib3==1.23
-Werkzeug==0.14.1
+Werkzeug==2.2.3
 gunicorn==19.6.0
 numpy==1.16.3
 beautifulsoup4==4.8.0
